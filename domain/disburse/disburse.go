@@ -6,15 +6,19 @@ import (
 	"github.com/iqrahadian/paperid-assesment/model/param"
 )
 
-func GetDisburseProcessor(accountType model.AccountType, accountNumber string) DisburseProcessor {
+func GetDisburseProcessor(accountType model.AccountType, accountNumber string) (DisburseProcessor, common.Error) {
+
+	err := common.Error{}
 
 	if accountType == model.Internal {
-		return InternalProcessor{}
+		return InternalProcessor{}, err
 	} else {
 		// many logic can be applied here
 		// like depend on third party disburse success rate, switch between one and other
-		return ExternallProcessor{}
+		return ExternallProcessor{}, err
 	}
+
+	return InternalProcessor{}, err
 
 }
 
