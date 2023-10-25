@@ -28,7 +28,6 @@ type Transaction struct {
 	UserID                   string
 	SourceAccountID          string
 	DestinationAccountID     common.NullString
-	DestinationAccountType   AccountType
 	DestinationAccountNumber string
 	Amount                   float64
 	Cost                     float64

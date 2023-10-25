@@ -11,12 +11,12 @@ import (
 	"github.com/iqrahadian/paperid-assesment/repo"
 )
 
-func GetAccountByID(carrier *ctx.Carrier, accountID string) (model.Account, common.Error) {
+func GetAccountByID(carrier *ctx.Carrier, accountID string) (model.Wallet, common.Error) {
 
 	if val, ok := repo.AccountRepo[accountID]; ok {
 		return val, common.Error{}
 	} else {
-		return model.Account{}, common.Error{
+		return model.Wallet{}, common.Error{
 			Error:   errors.New(message.DATA_NOT_FOUND),
 			Message: message.DATA_NOT_FOUND,
 			Code:    http.StatusNotFound,

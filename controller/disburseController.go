@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"encoding/json"
 	"errors"
 	"net/http"
 
@@ -8,10 +9,10 @@ import (
 	"github.com/iqrahadian/paperid-assesment/common/ctx"
 	"github.com/iqrahadian/paperid-assesment/common/http/response"
 	"github.com/iqrahadian/paperid-assesment/common/message"
-	controllervalidator "github.com/iqrahadian/paperid-assesment/controller/controller_validator"
 	"github.com/iqrahadian/paperid-assesment/domain/account"
 	"github.com/iqrahadian/paperid-assesment/domain/transaction"
 	"github.com/iqrahadian/paperid-assesment/event"
+	"github.com/iqrahadian/paperid-assesment/model/param"
 )
 
 func Disburse(res http.ResponseWriter, req *http.Request) {
@@ -22,9 +23,12 @@ func Disburse(res http.ResponseWriter, req *http.Request) {
 		UserId: &userID,
 	}
 
-	disburseParam, err := controllervalidator.PostDirburseValidator(&carrier, req)
-	if err.Error != nil {
-		response.Error(res, err)
+	var disburseParam param.DisburseParam
+
+	decoder := json.NewDecoder(req.Body)
+	if err := decoder.Decode(&disburseParam); err != nil {
+		response.Error(res, common.Error{err, http.StatusBadRequest, message.BAD_REQUEST})
+		return
 	}
 
 	// validate account is exist & owned by use

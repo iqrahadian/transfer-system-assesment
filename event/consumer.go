@@ -11,6 +11,7 @@ import (
 	"github.com/iqrahadian/paperid-assesment/domain/transaction"
 	"github.com/iqrahadian/paperid-assesment/model"
 	"github.com/iqrahadian/paperid-assesment/model/param"
+	"github.com/iqrahadian/paperid-assesment/repo"
 )
 
 func executeDisburse(job param.DisburseParam) {
@@ -46,7 +47,7 @@ func executeDisburse(job param.DisburseParam) {
 	UnlockAccount(job.SourceAccountID)
 
 	// try to disburse
-	disburseProcessor, err := disburse.GetDisburseProcessor(wallet.Type, wallet.AccountNumber)
+	disburseProcessor, err := disburse.GetDisburseProcessor(job.DestinationAccountNumber)
 	if err.Error != nil {
 		fmt.Errorf("Failed to deduct account balance, cause : ", err.Error)
 		_ = transaction.UpdateTransactionFailed(&carrier, job.TransactionID, model.TransansactionFailed, err.Message)
@@ -60,6 +61,9 @@ func executeDisburse(job param.DisburseParam) {
 
 	// handle success
 	_ = transaction.UpdateTransactionSuccess(&carrier, job.TransactionID, model.TransansactionSuccess)
+
+	fmt.Println("TRANSACTION DATA : ", repo.TransactionRepo)
+	fmt.Println("WALLET DATA : ", repo.AccountRepo)
 
 	fmt.Println(error)
 
