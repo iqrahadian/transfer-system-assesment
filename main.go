@@ -10,6 +10,7 @@ import (
 	"github.com/go-chi/chi/v5/middleware"
 	"github.com/iqrahadian/paperid-assesment/controller"
 	"github.com/iqrahadian/paperid-assesment/event"
+	"github.com/iqrahadian/paperid-assesment/repo"
 )
 
 func main() {
@@ -22,6 +23,9 @@ func main() {
 	wg.Add(1)
 	go event.StartConsumer(&wg)
 
+	// init base data
+	repo.OnLoad()
+
 	router := chi.NewRouter()
 	router.Use(middleware.Logger)
 
@@ -29,9 +33,10 @@ func main() {
 		w.Write([]byte("Welcome"))
 	})
 	router.Post("/disburse", controller.Disburse)
+	router.Get("/data", controller.ShowData)
 
+	fmt.Println("Serving api at post %s", port)
 	err := http.ListenAndServe(":"+port, router)
-
 	if err != nil {
 		log.Fatal(fmt.Sprintf("Failed running service without TLS. Listening on port:%s bind: address already in use", port), err)
 	}

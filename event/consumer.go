@@ -30,16 +30,18 @@ func executeDisburse(job param.DisburseParam) {
 		err = transaction.UpdateTransactionFailed(&carrier, job.TransactionID, model.TransansactionFailed, err.Message)
 		if err.Error != nil {
 			fmt.Errorf("Failed to update transaction status, cause : ", err.Error)
+			return
 		}
 	}
 
 	// deduct wallet
 	if userWallet.Balance > job.Amount {
-		err = wallet.DeductAccountBalance(&carrier, job.SenderID, job.Amount)
+		err = wallet.DeductAccountBalance(&carrier, job.SourceAccountID, job.Amount)
 		if err.Error != nil {
 			fmt.Errorf("Failed to deduct account balance, cause : ", err.Error)
 
 			_ = transaction.UpdateTransactionFailed(&carrier, job.TransactionID, model.TransansactionFailed, "Failed to deduct account balance")
+			return
 		}
 	}
 
@@ -51,6 +53,7 @@ func executeDisburse(job param.DisburseParam) {
 	if err.Error != nil {
 		fmt.Errorf("Failed to deduct account balance, cause : ", err.Error)
 		_ = transaction.UpdateTransactionFailed(&carrier, job.TransactionID, model.TransansactionFailed, err.Message)
+		return
 	}
 
 	err = disburseProcessor.Disburse(job)
@@ -58,6 +61,7 @@ func executeDisburse(job param.DisburseParam) {
 		fmt.Errorf("Failed to disburse money, cause : ", err.Error)
 		_ = transaction.UpdateTransactionFailed(&carrier, job.TransactionID, model.TransansactionFailed, err.Message)
 		_ = wallet.IncreaseAccountBalance(&carrier, job.SourceAccountID, job.Amount)
+		return
 	}
 
 	// handle success
@@ -65,6 +69,6 @@ func executeDisburse(job param.DisburseParam) {
 
 	fmt.Println("Finish disburse money")
 	fmt.Println("TRANSACTION DATA : ", repo.TransactionRepo)
-	fmt.Println("WALLET DATA : ", repo.AccountRepo)
+	fmt.Println("WALLET DATA : ", repo.WalletRepo)
 
 }

@@ -4,7 +4,7 @@ import "github.com/iqrahadian/paperid-assesment/model"
 
 var (
 	UserRepo        = map[string]model.User{}
-	AccountRepo     = map[string]model.Wallet{}
+	WalletRepo      = map[string]model.Wallet{}
 	TransactionRepo = map[string]model.Transaction{}
 )
 
@@ -15,8 +15,8 @@ func OnLoad() {
 		Name: "Iqbal",
 	}
 
-	AccountRepo["account1"] = model.Wallet{
-		ID:      "account1",
+	WalletRepo["wallet1"] = model.Wallet{
+		ID:      "wallet1",
 		Name:    "Iqbal's Account",
 		UserID:  "user1",
 		Balance: 100000,

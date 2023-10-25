@@ -13,6 +13,7 @@ import (
 	"github.com/iqrahadian/paperid-assesment/domain/wallet"
 	"github.com/iqrahadian/paperid-assesment/event"
 	"github.com/iqrahadian/paperid-assesment/model/param"
+	"github.com/iqrahadian/paperid-assesment/repo"
 )
 
 func Disburse(res http.ResponseWriter, req *http.Request) {
@@ -62,4 +63,16 @@ func Disburse(res http.ResponseWriter, req *http.Request) {
 	event.PublishEvent(disburseParam)
 
 	response.Success(res, message.SUCCESS, http.StatusOK, nil)
+}
+
+func ShowData(res http.ResponseWriter, req *http.Request) {
+
+	dataMap := make(map[string]interface{})
+
+	dataMap["user"] = repo.UserRepo
+	dataMap["wallet"] = repo.WalletRepo
+	dataMap["transaction"] = repo.TransactionRepo
+
+	response.Success(res, message.SUCCESS, http.StatusOK, dataMap)
+
 }

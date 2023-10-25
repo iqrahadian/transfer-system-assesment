@@ -2,6 +2,7 @@ package wallet
 
 import (
 	"errors"
+	"fmt"
 	"net/http"
 
 	"github.com/iqrahadian/paperid-assesment/common"
@@ -13,7 +14,7 @@ import (
 
 func GetAccountByID(carrier *ctx.Carrier, accountID string) (model.Wallet, common.Error) {
 
-	if val, ok := repo.AccountRepo[accountID]; ok {
+	if val, ok := repo.WalletRepo[accountID]; ok {
 		return val, common.Error{}
 	} else {
 		return model.Wallet{}, common.Error{
@@ -33,7 +34,9 @@ func DeductAccountBalance(carrier *ctx.Carrier, accountID string, amount float64
 	}
 
 	accountWallet.Balance -= amount
-	repo.AccountRepo[accountID] = accountWallet
+	repo.WalletRepo[accountID] = accountWallet
+
+	fmt.Println("New Account Wallet : ", accountWallet)
 
 	return common.Error{}
 
@@ -47,7 +50,7 @@ func IncreaseAccountBalance(carrier *ctx.Carrier, accountID string, amount float
 	}
 
 	accountWallet.Balance += amount
-	repo.AccountRepo[accountID] = accountWallet
+	repo.WalletRepo[accountID] = accountWallet
 
 	return common.Error{}
 
