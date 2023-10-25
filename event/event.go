@@ -37,6 +37,7 @@ func runConsumer(wg *sync.WaitGroup) {
 	}
 }
 
+// lock access to each account, making sure no more than one disbursement process run in paralel
 func LockAccount(key string) bool {
 	defer Mutex.Unlock()
 	Mutex.Lock()
