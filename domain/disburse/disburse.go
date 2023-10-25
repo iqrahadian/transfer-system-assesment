@@ -1,6 +1,11 @@
 package disburse
 
 import (
+	"errors"
+	"math/rand"
+	"net/http"
+	"time"
+
 	"github.com/iqrahadian/paperid-assesment/common"
 	"github.com/iqrahadian/paperid-assesment/model/param"
 )
@@ -28,5 +33,16 @@ func (i ExternallProcessor) Disburse(disburse param.DisburseParam) common.Error 
 
 	// logic for http request to third party API
 	// deliberately keep this logic empty
-	return common.Error{}
+
+	// set random response to simulate failure when communicate with switcher
+	rand.Seed(time.Now().UnixNano())
+	if rand.Intn(2) == 1 {
+		return common.Error{}
+	} else {
+		return common.Error{
+			Error:   errors.New("Error cause by third party"),
+			Message: "Got random error from disburse process",
+			Code:    http.StatusInternalServerError,
+		}
+	}
 }

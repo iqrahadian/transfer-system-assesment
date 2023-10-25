@@ -3,6 +3,7 @@ package transaction
 import (
 	"errors"
 	"net/http"
+	"time"
 
 	"github.com/iqrahadian/paperid-assesment/common"
 	"github.com/iqrahadian/paperid-assesment/common/ctx"
@@ -29,7 +30,8 @@ func GetTransactionByID(carrier *ctx.Carrier, transactionId string) (model.Trans
 
 func CreatePendingTransaction(carrier *ctx.Carrier, disburseParam param.DisburseParam) (model.Transaction, common.Error) {
 
-	transactionID := ""
+	t := time.Now()
+	transactionID := t.Format("20060102150405")
 	transaction := model.Transaction{
 		ID:     transactionID,
 		Status: model.TransactionPending,
