@@ -12,6 +12,10 @@ var (
 	AccountLock = make(map[string]bool)
 )
 
+func PublishEvent(job param.DisburseParam) {
+	jobChan <- job
+}
+
 func StartConsumer(wg *sync.WaitGroup) {
 	for w := 1; w < 10; w++ {
 		wg.Add(1)

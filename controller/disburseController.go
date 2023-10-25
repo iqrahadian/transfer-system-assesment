@@ -10,6 +10,8 @@ import (
 	"github.com/iqrahadian/paperid-assesment/common/message"
 	controllervalidator "github.com/iqrahadian/paperid-assesment/controller/controller_validator"
 	"github.com/iqrahadian/paperid-assesment/domain/account"
+	"github.com/iqrahadian/paperid-assesment/domain/transaction"
+	"github.com/iqrahadian/paperid-assesment/event"
 )
 
 func Disburse(res http.ResponseWriter, req *http.Request) {
@@ -26,7 +28,7 @@ func Disburse(res http.ResponseWriter, req *http.Request) {
 	}
 
 	// validate account is exist & owned by use
-	accountWallet, err := account.GetAccountByID(&carrier, "")
+	accountWallet, err := account.GetAccountByID(&carrier, disburseParam.SourceAccountID)
 	if err.Error != nil {
 		response.Error(res, err)
 	}
@@ -42,6 +44,14 @@ func Disburse(res http.ResponseWriter, req *http.Request) {
 		}
 		response.Error(res, err)
 	}
+
+	transaction, err := transaction.CreatePendingTransaction(&carrier, disburseParam)
+	if err.Error != nil {
+		response.Error(res, err)
+	}
+	disburseParam.TransactionID = transaction.ID
+
+	event.PublishEvent(disburseParam)
 
 	response.Success(res, message.SUCCESS, http.StatusOK, nil)
 }

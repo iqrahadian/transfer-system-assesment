@@ -42,6 +42,9 @@ func executeDisburse(job param.DisburseParam) {
 		}
 	}
 
+	// after wallet balance deducted, open the lock allowing another transaction to be processed
+	UnlockAccount(job.SourceAccountID)
+
 	// try to disburse
 	disburseProcessor, err := disburse.GetDisburseProcessor(wallet.Type, wallet.AccountNumber)
 	if err.Error != nil {

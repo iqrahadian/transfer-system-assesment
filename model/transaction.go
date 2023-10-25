@@ -34,6 +34,7 @@ type Transaction struct {
 	Cost                     float64
 	Type                     TransactionType
 	Status                   TransactionStatus
+	FailureMessage           common.NullString
 	RequestTime              common.NullDateTime
 	ProcessTime              common.NullDateTime
 	FinishedTime             common.NullDateTime

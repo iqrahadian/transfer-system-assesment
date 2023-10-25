@@ -10,20 +10,16 @@ var (
 
 func OnLoad() {
 
-	// UserRepo["user1"] = model.User{
-	// 	ID:   "user1",
-	// 	Name: "Iqbal",
-	// }
+	UserRepo["user1"] = model.User{
+		ID:   "user1",
+		Name: "Iqbal",
+	}
 
-	// UserRepo["user2"] = model.User{
-	// 	ID:   "user2",
-	// 	Name: "Rahadian",
-	// }
-
-	// AccountRepo["account1"] = model.Account{
-	// 	ID:     "account1",
-	// 	Name:   "Iqbal's Account",
-	// 	UserID: "user1",
-	// }
+	AccountRepo["account1"] = model.Account{
+		ID:      "account1",
+		Name:    "Iqbal's Account",
+		UserID:  "user1",
+		Balance: 100000,
+	}
 
 }
