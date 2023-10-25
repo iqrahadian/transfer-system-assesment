@@ -6,6 +6,8 @@ import (
 )
 
 type DisburseParam struct {
+	TransactionID            string `validate:"required"`
+	SenderID                 string `validate:"required"`
 	SourceAccountID          string `validate:"required"`
 	DestinationAccountID     common.NullString
 	DestinationAccountType   model.AccountType `validate:"required"`

@@ -8,4 +8,6 @@ import (
 
 func GetAccountByID(carrier *ctx.Carrier, accountID string) (model.Account, common.Error)
 
+func DeductAccountBalance(carrier *ctx.Carrier, accountID string, amount float64) common.Error
+
 func UpdateAccountBalance(carrier *ctx.Carrier, accountID string, amount float64) common.Error
