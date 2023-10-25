@@ -17,7 +17,7 @@ func PublishEvent(job param.DisburseParam) {
 }
 
 func StartConsumer(wg *sync.WaitGroup) {
-	for w := 1; w < 10; w++ {
+	for w := 1; w < 5; w++ {
 		wg.Add(1)
 		go runConsumer(wg)
 	}

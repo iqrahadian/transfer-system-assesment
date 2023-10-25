@@ -29,10 +29,14 @@ type DisburseProcessor interface {
 type InternalProcessor struct {
 }
 
-func (i InternalProcessor) Disburse(disburse param.DisburseParam) common.Error
+func (i InternalProcessor) Disburse(disburse param.DisburseParam) common.Error {
+	return common.Error{}
+}
 
 // This External Processor can be extented depend on disburse thirdparty, like Artajasa, Ayoconnect, Etc.
 type ExternallProcessor struct {
 }
 
-func (i ExternallProcessor) Disburse(disburse param.DisburseParam) common.Error
+func (i ExternallProcessor) Disburse(disburse param.DisburseParam) common.Error {
+	return common.Error{}
+}

@@ -8,4 +8,6 @@ import (
 	"github.com/iqrahadian/paperid-assesment/model/param"
 )
 
-func PostDirburseValidator(carrier *ctx.Carrier, req *http.Request) (param.DisburseParam, common.Error)
+func PostDirburseValidator(carrier *ctx.Carrier, req *http.Request) (param.DisburseParam, common.Error) {
+	return param.DisburseParam{}, common.Error{}
+}
