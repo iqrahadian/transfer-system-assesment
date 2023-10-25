@@ -5,11 +5,13 @@
 https://docs.google.com/document/d/1Rqa4FevkjujxPm5KzzC16yJtXGOyfW7OKxZyIynSzXM/edit?usp=sharing
 
 # command
-1. retrieve current data state(transaction,  wallet & user)
+1. to run serivce simply do `go run main.go`
+
+2. retrieve current data state(transaction,  wallet & user)
 
 curl --location --request GET 'localhost:3000/data'
 
-2. submit disburse request
+3. submit disburse request
 
 curl --location --request POST 'localhost:3000/disburse' \
 --header 'Content-Type: application/json' \
