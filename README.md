@@ -1,5 +1,9 @@
 # paperid-assesment
 
+# simple design & flow diagram
+
+https://docs.google.com/document/d/1Rqa4FevkjujxPm5KzzC16yJtXGOyfW7OKxZyIynSzXM/edit?usp=sharing
+
 # command
 1. retrieve current data state(transaction,  wallet & user)
 
