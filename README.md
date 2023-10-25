@@ -2,9 +2,11 @@
 
 # command
 1. retrieve current data state(transaction,  wallet & user)
+
 curl --location --request GET 'localhost:3000/data'
 
 2. submit disburse request
+
 curl --location --request POST 'localhost:3000/disburse' \
 --header 'Content-Type: application/json' \
 --data-raw '{
